@@ -6,8 +6,8 @@ const { getCookie } = require("./app/cookies");
 const { logger } = require("./app/logger");
 const { context } = require('./app/context');
 
+let cache = {};
 const server = (routing, port) => {
-  const cache = {};
   const serveFromCache = (req, res) => {
     logger(req);
     if (cache[req.url] && req.method === 'GET') {
@@ -37,5 +37,9 @@ const server = (routing, port) => {
 
   }).listen(port);
 }
+
+setInterval(() => {
+  cache = {};
+}, 10000)
 
 module.exports = { server };
