@@ -2,7 +2,7 @@
 
 const http = require('http');
 
-const { getCookie } = require("./app/cookies");
+const { parseCookies } = require("./app/cookies");
 const { logger } = require("./app/logger");
 const { context } = require('./app/context');
 
@@ -20,7 +20,7 @@ const server = (routing, port) => {
 
   http.createServer(async (req, res) => {
 
-    const cookies = getCookie(req.headers.cookie);
+    const cookies = parseCookies(req.headers.cookie);
     const { method, url } = req;
     const name = '/' === url ? url : url.substring(1).split('/');
     const entity = routing[name];
@@ -40,6 +40,7 @@ const server = (routing, port) => {
 
 setInterval(() => {
   cache = {};
+  console.log('cache cleared');
 }, 10000)
 
 module.exports = { server };

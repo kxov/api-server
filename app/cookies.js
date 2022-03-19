@@ -1,17 +1,19 @@
 'use strict';
 
-const getCookie = (cookie) => {
+const parseCookies = (cookie) => {
   const cookies = {};
 
-  if (cookie) cookie.split(';').forEach((item) => {
+  const items = cookie.split(';');
+  for (const item of items) {
     const parts = item.split('=');
-    cookies[(parts[0]).trim()] = (parts[1] || '').trim();
-  });
-
+    const key = parts[0].trim();
+    const val = parts[1] || '';
+    cookies[key] = val.trim();
+  }
   return cookies;
 };
 
-module.exports = { getCookie };
+module.exports = { parseCookies };
 
 
 
