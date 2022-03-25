@@ -1,6 +1,6 @@
 'use strict';
 
-const { routing } = require('./app/routes/routes.js');
 const { server } = require('./server.js');
+const { routing } = require('./app/routes/routes.js');
 
 server(routing, 9799);

@@ -2,9 +2,9 @@
 
 const http = require('http');
 
-const { parseCookies } = require("./app/cookies");
 const { logger } = require("./app/logger");
 const { context } = require('./app/context');
+const { parseCookies } = require('metautil');
 
 let cache = {};
 const server = (routing, port) => {
