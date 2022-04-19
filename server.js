@@ -6,7 +6,7 @@ const { logger } = require("./app/logger");
 const { context } = require('./app/context');
 const { parseCookies } = require('metautil');
 
-let cache = {};
+let cache = Object.create(null);
 const server = (routing, port) => {
   const serveFromCache = (req, res) => {
     logger(req);
