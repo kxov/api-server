@@ -2,7 +2,7 @@
 
 const http = require('http');
 
-const { logger } = require("./app/logger");
+const { logger } = require('./app/logger');
 const { context } = require('./app/context');
 const { parseCookies } = require('metautil');
 
