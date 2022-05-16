@@ -38,7 +38,7 @@ module.exports = {
       await fs.promises.writeFile('./person.json', data);
       return response('File saved');
     } catch (e) {
-      return response(e.toString(), 500)
+      return response(e.toString(), 500);
     }
-  }
+  },
 };

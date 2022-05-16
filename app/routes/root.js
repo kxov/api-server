@@ -1,6 +1,6 @@
 'use strict';
 
-const { response } = require("../response");
+const { response } = require('../response');
 
 module.exports = {
   get(requestContext) {
@@ -11,5 +11,5 @@ module.exports = {
     requestContext.res.write(`<h1>Welcome</h1>Your IP: ${ip}`);
 
     return response(`<pre>${JSON.stringify(requestContext.cookies)}</pre>`);
-  }
+  },
 };

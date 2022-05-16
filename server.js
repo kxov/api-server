@@ -16,31 +16,31 @@ const server = (routing, port) => {
       return true;
     }
     return false;
-  }
+  };
 
-  http.createServer(async (req, res) => {
+  http
+    .createServer(async (req, res) => {
+      const cookies = parseCookies(req.headers.cookie);
+      const { method, url } = req;
+      const name = '/' === url ? url : url.substring(1).split('/');
+      const entity = routing[name];
 
-    const cookies = parseCookies(req.headers.cookie);
-    const { method, url } = req;
-    const name = '/' === url ? url : url.substring(1).split('/');
-    const entity = routing[name];
+      if (!serveFromCache(req, res)) {
+        const handler = entity[method.toLowerCase()];
+        const requestContext = context(req, res, cookies, cache);
 
-    if (!serveFromCache(req, res)) {
-      const handler = entity[method.toLowerCase()];
-      const requestContext = context(req, res, cookies, cache);
+        const { code, message } = await handler(requestContext);
 
-      const { code, message } = await handler(requestContext);
-
-      res.statusCode = code;
-      res.end(message);
-    }
-
-  }).listen(port);
-}
+        res.statusCode = code;
+        res.end(message);
+      }
+    })
+    .listen(port);
+};
 
 setInterval(() => {
   cache = {};
   console.log('cache cleared');
-}, 10000)
+}, 10000);
 
 module.exports = { server };
