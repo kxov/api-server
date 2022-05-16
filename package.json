@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
-    "fmt": "prettier --write \"**/*.js\" \"**/*.json\" \"**/*.md\" \"**/.*rc\" \"**/*.ts\""
+    "fmt": "prettier --write \"**/*.js\" \"**/*.json\"",
+    "lint": "eslint . && prettier -c \"**/*.js\" \"**/*.json\""
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +15,10 @@
     "metautil": "^3.5.19"
   },
   "devDependencies": {
+    "eslint": "^8.15.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "prettier": "2.6.2"
   }
 }
