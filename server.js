@@ -6,6 +6,8 @@ const { logger } = require('./app/logger');
 const { context } = require('./app/context');
 const { parseCookies } = require('metautil');
 
+const cacheInterval = 10000;
+
 let cache = Object.create(null);
 const server = (routing, port) => {
   const serveFromCache = (req, res) => {
@@ -41,6 +43,6 @@ const server = (routing, port) => {
 setInterval(() => {
   cache = {};
   console.log('cache cleared');
-}, 10000);
+}, cacheInterval);
 
 module.exports = { server };
