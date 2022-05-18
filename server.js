@@ -8,7 +8,7 @@ const { parseCookies } = require('metautil');
 
 const cacheInterval = 10000;
 
-let cache = Object.create(null);
+const cache = new Map();
 const server = (routing, port) => {
   const serveFromCache = (req, res) => {
     logger(req);
@@ -22,7 +22,9 @@ const server = (routing, port) => {
 
   http
     .createServer(async (req, res) => {
-      const cookies = parseCookies(req.headers.cookie);
+
+      const cookies = parseCookies(req.headers.cookie || '');
+
       const { method, url } = req;
       const name = '/' === url ? url : url.substring(1).split('/');
       const entity = routing[name];
@@ -41,7 +43,7 @@ const server = (routing, port) => {
 };
 
 setInterval(() => {
-  cache = {};
+  cache.clear();
   console.log('cache cleared');
 }, cacheInterval);
 
