@@ -5,10 +5,10 @@ const http = require('http');
 const { logger } = require('./app/logger');
 const { context } = require('./app/context');
 const { parseCookies } = require('metautil');
+const cache = require('./app/cache');
 
 const cacheInterval = 10000;
 
-const cache = new Map();
 const server = (routing, port) => {
   const serveFromCache = (req, res) => {
     logger(req);
