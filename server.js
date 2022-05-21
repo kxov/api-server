@@ -12,9 +12,10 @@ const cache = new Map();
 const server = (routing, port) => {
   const serveFromCache = (req, res) => {
     logger(req);
-    if (cache[req.url] && req.method === 'GET') {
+    const cacheUrl = cache.get(req.url);
+    if (cacheUrl && req.method === 'GET') {
       res.writeHead(200);
-      res.end(cache[req.url]);
+      res.end(cacheUrl);
       return true;
     }
     return false;
@@ -22,7 +23,6 @@ const server = (routing, port) => {
 
   http
     .createServer(async (req, res) => {
-
       const cookies = parseCookies(req.headers.cookie || '');
 
       const { method, url } = req;
@@ -31,7 +31,7 @@ const server = (routing, port) => {
 
       if (!serveFromCache(req, res)) {
         const handler = entity[method.toLowerCase()];
-        const requestContext = context(req, res, cookies, cache);
+        const requestContext = context(req, res, cookies);
 
         const { code, message } = await handler(requestContext);
 

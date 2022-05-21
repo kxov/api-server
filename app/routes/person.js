@@ -2,6 +2,7 @@
 
 const { response } = require('../response');
 const { Person } = require('../domain/person');
+const cache = require('../cache');
 const fs = require('fs');
 
 const receiveArgs = async (req) => {
@@ -21,7 +22,7 @@ module.exports = {
 
       const result = JSON.stringify(Person.from(obj));
 
-      requestContext.cache[requestContext.req.url] = result;
+      cache.set(requestContext.req.url, result);
 
       return response(result);
     } catch (e) {

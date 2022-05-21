@@ -1,5 +1,5 @@
 'use strict';
 
-const context = (req, res, cookies, cache) => ({ req, res, cookies, cache });
+const context = (req, res, cookies) => ({ req, res, cookies });
 
 module.exports = { context };
