@@ -22,7 +22,7 @@ const server = (routing, port) => {
 
   http
     .createServer(async (req, res) => {
-      const client = await Client.getInstance(req, res);
+      const client = Client.getInstance(req, res);
 
       const { method, url } = req;
       const name = '/' === url ? url : url.substring(1).split('/');

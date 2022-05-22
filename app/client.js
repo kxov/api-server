@@ -10,7 +10,7 @@ class Client {
     this.parseCookie();
   }
 
-  static async getInstance(req, res) {
+  static getInstance(req, res) {
     return new Client(req, res);
   }
 
