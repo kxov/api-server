@@ -5,32 +5,23 @@ const { Person } = require('../domain/person');
 const cache = require('../cache');
 const fs = require('fs');
 
-const receiveArgs = async (req) => {
-  const buffers = [];
-  for await (const chunk of req) {
-    buffers.push(chunk);
-  }
-  const data = Buffer.concat(buffers).toString();
-  return JSON.parse(data);
-};
-
 module.exports = {
-  async get(requestContext) {
+  async get(client) {
     try {
       const buffer = await fs.promises.readFile('./person.json');
       const obj = JSON.parse(buffer.toString());
 
       const result = JSON.stringify(Person.from(obj));
 
-      cache.set(requestContext.req.url, result);
+      cache.set(client.req.url, result);
 
       return response(result);
     } catch (e) {
       return response(e.toString(), 500);
     }
   },
-  async post(requestContext) {
-    const obj = await receiveArgs(requestContext.req);
+  async post(client) {
+    const obj = await client.receiveArgs();
 
     if (obj.name) obj.name = obj.name.trim();
     const data = JSON.stringify(obj);

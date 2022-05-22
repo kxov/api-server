@@ -3,9 +3,8 @@
 const http = require('http');
 
 const { logger } = require('./app/logger');
-const { context } = require('./app/context');
-const { parseCookies } = require('metautil');
 const cache = require('./app/cache');
+const Client = require('./app/client');
 
 const cacheInterval = 10000;
 
@@ -23,7 +22,7 @@ const server = (routing, port) => {
 
   http
     .createServer(async (req, res) => {
-      const cookies = parseCookies(req.headers.cookie || '');
+      const client = await Client.getInstance(req, res);
 
       const { method, url } = req;
       const name = '/' === url ? url : url.substring(1).split('/');
@@ -31,10 +30,10 @@ const server = (routing, port) => {
 
       if (!serveFromCache(req, res)) {
         const handler = entity[method.toLowerCase()];
-        const requestContext = context(req, res, cookies);
 
-        const { code, message } = await handler(requestContext);
+        const { code, message } = await handler(client);
 
+        client.sendCookie();
         res.statusCode = code;
         res.end(message);
       }
