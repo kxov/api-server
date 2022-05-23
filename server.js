@@ -33,6 +33,10 @@ const server = (routing, port) => {
 
         const { code, message } = await handler(client);
 
+        if (client.req.method === 'GET') {
+            cache.set(client.req.url, message);
+        }
+
         client.sendCookie();
         res.statusCode = code;
         res.end(message);

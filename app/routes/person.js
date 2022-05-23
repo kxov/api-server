@@ -13,8 +13,6 @@ module.exports = {
 
       const result = JSON.stringify(Person.from(obj));
 
-      cache.set(client.req.url, result);
-
       return response(result);
     } catch (e) {
       return response(e.toString(), 500);
