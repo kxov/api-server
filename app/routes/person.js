@@ -2,7 +2,6 @@
 
 const { response } = require('../response');
 const { Person } = require('../domain/person');
-const cache = require('../cache');
 const fs = require('fs');
 
 module.exports = {

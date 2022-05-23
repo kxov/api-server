@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/src
+    ports:
+      - "9999:9999"
