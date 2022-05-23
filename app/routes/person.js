@@ -5,7 +5,7 @@ const { Person } = require('../domain/person');
 const fs = require('fs');
 
 module.exports = {
-  async get(client) {
+  async get() {
     try {
       const buffer = await fs.promises.readFile('./person.json');
       const obj = JSON.parse(buffer.toString());
