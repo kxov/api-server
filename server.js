@@ -27,6 +27,7 @@ const server = (routing, port) => {
       const { method, url } = req;
       const name = '/' === url ? url : url.substring(1).split('/');
       const entity = routing[name];
+      if (!entity) return res.end('Not found');
 
       if (!serveFromCache(req, res)) {
         const handler = entity[method.toLowerCase()];
